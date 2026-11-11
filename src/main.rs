@@ -68,7 +68,11 @@ async fn main() -> ExitCode {
     let log = async move {
         let mut reader = log_reader::build(
             log_path,
-            RegexSet::new([r"Generating level \d+ area"]).unwrap(),
+            RegexSet::new([
+                r"Generating level \d+ area",
+                r"^\S+ \S+ \d+ \S+ \[INFO Client \d+\] : \S+ \(\S+\) is now level \d+$",
+            ])
+            .unwrap(),
         )?;
 
         let mut interval = tokio::time::interval(Duration::from_secs(args.heart_beat));
